@@ -1,0 +1,47 @@
+PATIENT LOGIN:
+
+CREATE OR REPLACE FUNCTION validate_login(login_id TEXT, password TEXT) RETURNS BOOLEAN AS $$
+DECLARE
+    stored_password TEXT;
+BEGIN
+    -- Fetch the stored password for the given login ID
+    SELECT password INTO stored_password
+    FROM users
+    WHERE login_id = login_id;
+
+    -- Check if the password matches the stored password
+    IF stored_password IS NOT NULL AND stored_password = password THEN
+        RETURN TRUE; -- Login is valid
+    ELSE
+        RETURN FALSE; -- Login is not valid
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+PATIENT REGISTRATION:
+
+CREATE OR REPLACE FUNCTION register_patient(
+    name TEXT,
+    age INTEGER,
+    gender TEXT,
+    address TEXT,
+    phone_no TEXT,
+    password TEXT,
+    admission_date DATE
+) RETURNS INTEGER AS $$
+DECLARE
+    patient_id INTEGER;
+BEGIN
+    -- Insert the patient's data into the 'patients' table
+    INSERT INTO patients (name, age, gender, address, phone_no, password, admission_date, release_date)
+    VALUES (name, age, gender, address, phone_no, password, admission_date, NULL)
+    RETURNING patient_id INTO patient_id;
+
+    -- Return the generated patient ID
+    RETURN patient_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+

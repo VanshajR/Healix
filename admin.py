@@ -68,9 +68,8 @@ class AdminWindow(cust.CTk):
 
     def open_doctor_staff_registration(self):
         # Open the doctor/staff registration window
-        staff_registration_window = StaffRegistrationWindow("Staff Registration", 500, 900)
-        staff_registration_window.resizable(width=False, height=False)
-        staff_registration_window.resizable(width=False, height=False)
+        staff_registration_window = StaffRegistrationWindow("Staff Registration", 375, 900)
+        staff_registration_window.resizable(width=False, height=True)
         staff_registration_window.mainloop()
 
     def open_view_records(self):

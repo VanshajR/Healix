@@ -30,14 +30,12 @@ CREATE TABLE Doctors (
 
 -- Table for Patient Phone Numbers
 CREATE TABLE Patient_Phone_Numbers (
-    Phone_ID SERIAL PRIMARY KEY,
     Patient_ID INT REFERENCES Patients(Patient_ID),
     Phone_Number VARCHAR(10) NOT NULL CHECK (LENGTH(Phone_Number) = 10)
 );
 
 -- Create a table for staff phone numbers
 CREATE TABLE Staff_Phone_Numbers (
-    Phone_ID SERIAL PRIMARY KEY,
     Staff_ID INT REFERENCES Staff(S_ID),
     Phone_Number VARCHAR(10) NOT NULL CHECK (LENGTH(Phone_Number) = 10)
 );

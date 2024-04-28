@@ -169,10 +169,10 @@ class StaffRegistrationWindow(cust.CTk):
         if not address:
             CTkMessagebox(title="Error", message="Address cannot be empty.", icon="warning")
             return
-
-        if not password or len(password) < 8:
-            CTkMessagebox(title="Error", message="Password must be at least 8 characters long.", icon="warning")
-            return
+        if self.role == "Doctor":
+            if not password or len(password) < 8:
+                CTkMessagebox(title="Error", message="Password must be at least 8 characters long.", icon="warning")
+                return
 
         if not date_of_joining:
             CTkMessagebox(title="Error", message="Admission date cannot be empty.", icon="warning")

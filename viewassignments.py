@@ -34,8 +34,13 @@ class AssignmentViewWindow(cust.CTk):
         self.title(title)
         self.geometry(f"{width}x{height}")
 
+        # Create the Delete button
+        self.delete_button = cust.CTkButton(self, text="Delete", command=self.delete_record)
+        self.delete_button.pack(pady=10)
+
         # Create a frame for the table
         self.table_frame = cust.CTkFrame(self)
+        self.table_frame.configure(height=800)
         self.table_frame.pack(padx=20, pady=20)
 
         # Create the table
@@ -49,9 +54,6 @@ class AssignmentViewWindow(cust.CTk):
         self.table.heading("Doctor ID", text="Doctor ID")
         self.table.heading("Doctor Name", text="Doctor Name")
 
-        # Create the Delete button
-        self.delete_button = cust.CTkButton(self, text="Delete", command=self.delete_record)
-        self.delete_button.pack(pady=10)
 
         # Populate the table
         self.populate_table()

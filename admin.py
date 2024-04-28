@@ -96,7 +96,7 @@ class AdminWindow(cust.CTk):
         assign_window.mainloop()
     def open_view_assignments(self):
         #Open the view assignments window
-        assignment_window = AssignmentViewWindow("Assignment", 700, 200)
+        assignment_window = AssignmentViewWindow("Assignment", 700, 300)
         assignment_window.resizable(width=False, height=False)
         assignment_window.mainloop()
 

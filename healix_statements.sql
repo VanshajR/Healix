@@ -43,8 +43,8 @@ CREATE TABLE Staff_Phone_Numbers (
 CREATE TABLE assignment (
     patient_id INTEGER,
     doc_id INTEGER,
-    CONSTRAINT fk_patient FOREIGN KEY (patient_id) REFERENCES Patients (Patient_ID),
-    CONSTRAINT fk_doctor FOREIGN KEY (doc_id) REFERENCES Doctors (Doc_ID)
+    CONSTRAINT fk_patient FOREIGN KEY (patient_id) REFERENCES Patients (Patient_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_doctor FOREIGN KEY (doc_id) REFERENCES Doctors (Doc_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE OR REPLACE FUNCTION register_patient(

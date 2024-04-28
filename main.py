@@ -61,6 +61,13 @@ class LoginWindow(cust.CTk):
         # Button to perform login
         self.login_button = cust.CTkButton(self.login_frame, text="Login", command=self.perform_login)
         self.login_button.grid(row=3, columnspan=2, padx=10, pady=10)
+        self.user_id_entry.bind("<Return>", self.check_fields)
+        self.password_entry.bind("<Return>", self.check_fields)
+
+    def check_fields(self, event=None):
+        # Check if both fields are filled
+        if self.user_id_entry.get() and self.password_entry.get():
+            self.perform_login()
 
     def perform_login(self):
         # Get login type

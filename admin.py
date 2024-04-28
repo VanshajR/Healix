@@ -48,15 +48,16 @@ class AdminWindow(cust.CTk):
 
     def open_patient_registration(self):
         # Open the patient registration window
-        registration_window = PatientRegistrationWindow("Patient Registration", 500, 700)
+        registration_window = PatientRegistrationWindow("Patient Registration", 500, 750)
         # Start the main loop
+        registration_window.resizable(width=False, height=False)
         registration_window.mainloop()
 
     def open_doctor_staff_registration(self):
         # Open the doctor/staff registration window
         staff_registration_window = StaffRegistrationWindow("Staff Registration", 500, 900)
         staff_registration_window.resizable(width=False, height=False)
-
+        staff_registration_window.resizable(width=False, height=False)
         staff_registration_window.mainloop()
 
     def open_view_records(self):
@@ -68,11 +69,13 @@ class AdminWindow(cust.CTk):
     def open_update_records(self):
         # Open the update records window
         update_window = UpdateWindow("Data Update", 500, 200)
+        update_window.resizable(width=False, height=False)
         update_window.mainloop()
 
     def open_delete_records(self):
         # Open the delete records window
         delete_window = DeleteWindow("Record Deletion", 600, 100)
+        delete_window.resizable(width=False, height=False)
         delete_window.mainloop()
 
 if __name__ == "__main__":

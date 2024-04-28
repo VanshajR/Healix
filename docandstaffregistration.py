@@ -21,79 +21,96 @@ class StaffRegistrationWindow(cust.CTk):
         self.title(title)
         self.geometry(f"{width}x{height}")
 
+        # Create a canvas for scrollable area
+        self.canvas = cust.CTkCanvas(self)
+        self.canvas.pack(side=cust.LEFT, fill=cust.BOTH, expand=True)
+
+        # Add a scrollbar to the canvas
+        self.scrollbar = cust.CTkScrollbar(self, orientation=cust.VERTICAL, command=self.canvas.yview)
+        self.scrollbar.pack(side=cust.RIGHT, fill=cust.Y)
+
+        # Configure the canvas to use the scrollbar
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.canvas.bind('<Configure>', lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        # Create a frame inside the canvas to contain widgets
+        self.frame = cust.CTkFrame(self.canvas)
+        self.canvas.create_window((0, 0), window=self.frame, anchor=cust.NW)
+
         # Create the widgets for staff registration
         self.create_widgets()
 
     def create_widgets(self):
         # Create a title label
-        self.label_title = cust.CTkLabel(self, text="Staff Registration", font=("", 16))
+        self.label_title = cust.CTkLabel(self.frame, text="Staff Registration", font=("", 16))
         self.label_title.pack(pady=10)
 
         # Create buttons for selecting the role
-        self.button_frame = cust.CTkFrame(self)
+        self.button_frame = cust.CTkFrame(self.frame)
         self.button_frame.pack(pady=10)
 
         self.doctor_button = cust.CTkButton(self.button_frame, text="Doctor", command=self.set_doctor_role)
         self.doctor_button.pack(side=cust.LEFT, padx=20)
 
-        self.other_staff_button = cust.CTkButton(self.button_frame, text="Other Staff", command=self.set_other_staff_role)
+        self.other_staff_button = cust.CTkButton(self.button_frame, text="Other Staff",
+                                                 command=self.set_other_staff_role)
         self.other_staff_button.pack(side=cust.RIGHT, padx=20)
 
         # Create entry fields for staff information
-        self.label_name = cust.CTkLabel(self, text="Name:")
+        self.label_name = cust.CTkLabel(self.frame, text="Name:")
         self.label_name.pack(pady=5)
-        self.entry_name = cust.CTkEntry(self, width=300)
+        self.entry_name = cust.CTkEntry(self.frame, width=300)
         self.entry_name.pack(pady=5)
 
-        self.label_age = cust.CTkLabel(self, text="Age:")
+        self.label_age = cust.CTkLabel(self.frame, text="Age:")
         self.label_age.pack(pady=5)
-        self.entry_age = cust.CTkEntry(self, width=300)
+        self.entry_age = cust.CTkEntry(self.frame, width=300)
         self.entry_age.pack(pady=5)
 
-        self.label_gender = cust.CTkLabel(self, text="Gender (M/F/O):")
+        self.label_gender = cust.CTkLabel(self.frame, text="Gender (M/F/O):")
         self.label_gender.pack(pady=5)
-        self.entry_gender = cust.CTkEntry(self, width=300)
+        self.entry_gender = cust.CTkEntry(self.frame, width=300)
         self.entry_gender.pack(pady=5)
 
-        self.label_address = cust.CTkLabel(self, text="Address:")
+        self.label_address = cust.CTkLabel(self.frame, text="Address:")
         self.label_address.pack(pady=5)
-        self.entry_address = cust.CTkEntry(self, width=300)
+        self.entry_address = cust.CTkEntry(self.frame, width=300)
         self.entry_address.pack(pady=5)
 
-        self.label_department = cust.CTkLabel(self, text="Department:")
+        self.label_department = cust.CTkLabel(self.frame, text="Department:")
         self.label_department.pack(pady=5)
-        self.entry_department = cust.CTkEntry(self, width=300)
+        self.entry_department = cust.CTkEntry(self.frame, width=300)
         self.entry_department.pack(pady=5)
 
-        self.label_salary = cust.CTkLabel(self, text="Salary:")
+        self.label_salary = cust.CTkLabel(self.frame, text="Salary:")
         self.label_salary.pack(pady=5)
-        self.entry_salary = cust.CTkEntry(self, width=300)
+        self.entry_salary = cust.CTkEntry(self.frame, width=300)
         self.entry_salary.pack(pady=5)
 
-        self.label_date_joining = cust.CTkLabel(self, text="Date of Joining:")
+        self.label_date_joining = cust.CTkLabel(self.frame, text="Date of Joining:")
         self.label_date_joining.pack(pady=5)
-        self.date_joining = DateEntry(self, date_pattern='yyyy-mm-dd', width=12)
+        self.date_joining = DateEntry(self.frame, date_pattern='yyyy-mm-dd', width=12)
         self.date_joining.pack(pady=5)
 
         # Additional entry fields for phone numbers
-        self.label_phone_no1 = cust.CTkLabel(self, text="Phone Number 1:")
+        self.label_phone_no1 = cust.CTkLabel(self.frame, text="Phone Number 1:")
         self.label_phone_no1.pack(pady=5)
-        self.entry_phone_no1 = cust.CTkEntry(self, width=300)
+        self.entry_phone_no1 = cust.CTkEntry(self.frame, width=300)
         self.entry_phone_no1.pack(pady=5)
 
-        self.label_phone_no2 = cust.CTkLabel(self, text="Phone Number 2:")
+        self.label_phone_no2 = cust.CTkLabel(self.frame, text="Phone Number 2:")
         self.label_phone_no2.pack(pady=5)
-        self.entry_phone_no2 = cust.CTkEntry(self, width=300)
+        self.entry_phone_no2 = cust.CTkEntry(self.frame, width=300)
         self.entry_phone_no2.pack(pady=5)
 
         # Entry field for password (only for doctor role)
-        self.label_password = cust.CTkLabel(self, text="Password:")
-        self.entry_password = cust.CTkEntry(self, show="*", width=300)
+        self.label_password = cust.CTkLabel(self.frame, text="Password:")
+        self.entry_password = cust.CTkEntry(self.frame, show="*", width=300)
         self.label_password.pack_forget()
         self.entry_password.pack_forget()
 
         # Buttons for registering and clearing fields
-        self.bottom_frame = cust.CTkFrame(self)
+        self.bottom_frame = cust.CTkFrame(self.frame)
         self.bottom_frame.pack(side=cust.BOTTOM, pady=10)
 
         self.register_button = cust.CTkButton(self.bottom_frame, text="Register", command=self.register_staff)
@@ -228,7 +245,7 @@ class StaffRegistrationWindow(cust.CTk):
 
 # Example usage
 if __name__ == "__main__":
-    staff_registration_window = StaffRegistrationWindow("Staff Registration", 500, 900)
-    staff_registration_window.resizable(width=False, height=False)
+    staff_registration_window = StaffRegistrationWindow("Staff Registration", 375, 900)
+    staff_registration_window.resizable(width=False, height=True)
 
     staff_registration_window.mainloop()

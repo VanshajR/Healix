@@ -83,7 +83,7 @@ class LoginWindow(cust.CTk):
             # If admin account
             if self.user_id_entry.get() == os.getenv("ADMIN_ID"):
                 if self.password_entry.get() == os.getenv("ADMIN_PASSWORD"):
-                    login_window = AdminWindow("Admin Control Panel", 300, 280)
+
                     login_window.mainloop()
                     return
                 else:

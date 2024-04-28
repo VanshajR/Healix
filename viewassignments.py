@@ -49,6 +49,10 @@ class AssignmentViewWindow(cust.CTk):
         self.table.heading("Doctor ID", text="Doctor ID")
         self.table.heading("Doctor Name", text="Doctor Name")
 
+        # Create the Delete button
+        self.delete_button = cust.CTkButton(self, text="Delete", command=self.delete_record)
+        self.delete_button.pack(pady=10)
+
         # Populate the table
         self.populate_table()
 
@@ -73,6 +77,32 @@ class AssignmentViewWindow(cust.CTk):
         except Exception as e:
             CTkMessagebox(title="Error", message=f"An error occurred: {e}", icon="cancel")
             print(f"An error occurred: {e}")
+
+        finally:
+            cursor.close()
+            conn.close()
+
+    def delete_record(self):
+        selected_items = self.table.selection()  # Get the list of selected items in the table
+        if not selected_items:
+            CTkMessagebox(title="No Selection", message="Please select one or more records to delete.", icon="warning")
+            return
+
+        conn = connect_to_database()
+        cursor = conn.cursor()
+
+        try:
+            for item in selected_items:
+                patient_id = self.table.item(item, "values")[0]  # Get the patient ID from the selected item
+                cursor.execute("DELETE FROM assignment WHERE patient_id = %s", (patient_id,))
+                self.table.delete(item)  # Delete the selected item from the table
+
+            conn.commit()
+            CTkMessagebox(title="Success", message="Records deleted successfully.", icon="info")
+
+        except Exception as e:
+            conn.rollback()
+            CTkMessagebox(title="Error", message=f"An error occurred: {e}", icon="cancel")
 
         finally:
             cursor.close()

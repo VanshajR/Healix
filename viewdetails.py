@@ -309,6 +309,7 @@ class DataRetrievalWindow(cust.CTk):
             # Create a table to display results
             table = ttk.Treeview(result_window, columns=("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"), show="headings")
             table.pack(fill="both", expand=True)
+            table.configure(padding=15,height=25)
 
             # Define column names
             column_names = {

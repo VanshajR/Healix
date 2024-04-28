@@ -95,39 +95,50 @@ class LoginWindow(cust.CTk):
                 password = self.password_entry.get()
                 if login_type == "Patient":
                     cursor.execute("SELECT check_patient_login(%s, %s)", (int(user_id), password))
-                    # Fetch assigned doctors for the patient
-                    cursor.execute("""
-                        SELECT d.doc_id, s.name 
-                        FROM assignment ad 
-                        JOIN doctors d ON ad.doc_id = d.doc_id 
-                        JOIN staff s ON d.s_id = s.s_id 
-                        WHERE ad.patient_id = %s
-                    """, (int(user_id),))
-                    assigned_doctors = cursor.fetchall()
-                    if assigned_doctors:
-                        message = "You are logged in as a patient.\n\nAssigned Doctors:\n"
-                        for doctor in assigned_doctors:
-                            message += f"Doctor ID: {doctor[0]}, Name: {doctor[1]}\n"
+                    result=cursor.fetchone()
+                    isValid=result[0]
+                    if isValid:
+                        # Fetch assigned doctors for the patient
+                        cursor.execute("""
+                            SELECT d.doc_id, s.name 
+                            FROM assignment ad 
+                            JOIN doctors d ON ad.doc_id = d.doc_id 
+                            JOIN staff s ON d.s_id = s.s_id 
+                            WHERE ad.patient_id = %s
+                        """, (int(user_id),))
+                        assigned_doctors = cursor.fetchall()
+
+                        if assigned_doctors:
+                            message = "You are logged in as a patient.\n\nAssigned Doctors:\n"
+                            for doctor in assigned_doctors:
+                                message += f"Doctor ID: {doctor[0]}, Name: {doctor[1]}\n"
+                        else:
+                            message = "You are logged in as a patient.\n\nNo doctors assigned."
                     else:
-                        message = "You are logged in as a patient.\n\nNo doctors assigned."
+                        message = "Invalid Login!\n\n"
                 elif login_type == "Doctor":
                     cursor.execute("SELECT check_doctor_login(%s, %s)", (int(user_id), password))
-                    # Fetch assigned patients for the doctor
-                    cursor.execute("""
-                        SELECT p.patient_id, p.name 
-                        FROM assignment ad 
-                        JOIN patients p ON ad.patient_id = p.patient_id 
-                        WHERE ad.doc_id = %s
-                    """, (int(user_id),))
-                    assigned_patients = cursor.fetchall()
-                    if assigned_patients:
-                        message = "You are logged in as a doctor.\n\nAssigned Patients:\n"
-                        for patient in assigned_patients:
-                            message += f"Patient ID: {patient[0]}, Name: {patient[1]}\n"
-                    else:
-                        message = "You are logged in as a doctor.\n\nNo patients assigned."
+                    result = cursor.fetchone()
+                    isValid = result[0]
+                    if isValid:
+                        # Fetch assigned patients for the doctor
+                        cursor.execute("""
+                            SELECT p.patient_id, p.name 
+                            FROM assignment ad 
+                            JOIN patients p ON ad.patient_id = p.patient_id 
+                            WHERE ad.doc_id = %s
+                        """, (int(user_id),))
+                        assigned_patients = cursor.fetchall()
+                        if assigned_patients:
+                            message = "You are logged in as a doctor.\n\nAssigned Patients:\n"
+                            for patient in assigned_patients:
+                                message += f"Patient ID: {patient[0]}, Name: {patient[1]}\n"
 
-                CTkMessagebox(title="Login Successful", message=message.strip(), icon="info")
+                        else:
+                            message = "You are logged in as a doctor.\n\nNo patients assigned."
+                    else:
+                        message = "Invalid Login!\n\n"
+                CTkMessagebox(title="Login Result", message=message.strip(), icon="info")
 
         except Exception as e:
             CTkMessagebox(title="Error", message=f"An error occurred: {e}", icon="cancel")

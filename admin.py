@@ -74,7 +74,7 @@ class AdminWindow(cust.CTk):
 
     def open_view_records(self):
         # Open the view records window
-        data_retrieval_window = DataRetrievalWindow("Data Retrieval", 500, 200)
+        data_retrieval_window = DataRetrievalWindow("Data Retrieval", 500, 300)
         data_retrieval_window.resizable(width=False, height=False)
         data_retrieval_window.mainloop()
 

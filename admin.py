@@ -1,8 +1,11 @@
+from assigndoctor import AssignmentWindow
 from patientregistration import PatientRegistrationWindow
 from docandstaffregistration import StaffRegistrationWindow
 from viewdetails import DataRetrievalWindow
 from updatedetails import UpdateWindow
 from deletedata import DeleteWindow
+from assigndoctor import AssignmentWindow
+from viewassignments import AssignmentViewWindow
 import customtkinter as cust
 from CTkMessagebox import CTkMessagebox
 import psycopg2
@@ -46,6 +49,16 @@ class AdminWindow(cust.CTk):
         )
         self.delete_records_button.pack(pady=10)
 
+        self.assign_doctor_button = cust.CTkButton(
+            self, text="Assign Doctors", command=self.open_assign_doctor
+        )
+        self.assign_doctor_button.pack(pady=10)
+
+        self.view_assignments_button = cust.CTkButton(
+            self, text="View Assignments", command=self.open_view_assignments
+        )
+        self.view_assignments_button.pack(pady=10)
+
     def open_patient_registration(self):
         # Open the patient registration window
         registration_window = PatientRegistrationWindow("Patient Registration", 500, 750)
@@ -78,6 +91,18 @@ class AdminWindow(cust.CTk):
         delete_window.resizable(width=False, height=False)
         delete_window.mainloop()
 
+    def open_assign_doctor(self):
+        assign_window = AssignmentWindow("Assignment", 500, 200)
+        assign_window.resizable(width=False, height=False)
+        assign_window.mainloop()
+    def open_view_assignments(self):
+        #Open the view assignments window
+        assignment_window = AssignmentViewWindow("Assignment", 700, 200)
+        assignment_window.resizable(width=False, height=False)
+        assignment_window.mainloop()
+
+
 if __name__ == "__main__":
-    login_window = AdminWindow("Login", 300, 280)
+    login_window = AdminWindow("Login", 300, 350)
+    login_window.resizable(width=False, height=False)
     login_window.mainloop()

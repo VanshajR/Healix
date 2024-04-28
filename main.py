@@ -25,6 +25,8 @@ def connect_to_database():
         port=url.port
     )
     return conn
+
+
 class LoginWindow(cust.CTk):
     def __init__(self, title, width, height):
         super().__init__()
@@ -78,9 +80,9 @@ class LoginWindow(cust.CTk):
 
         try:
             # Call the appropriate PL/SQL function based on the login type
-            #If admin account
-            if self.user_id_entry.get()==os.getenv("ADMIN_ID"):
-                if self.password_entry.get()==os.getenv("ADMIN_PASSWORD"):
+            # If admin account
+            if self.user_id_entry.get() == os.getenv("ADMIN_ID"):
+                if self.password_entry.get() == os.getenv("ADMIN_PASSWORD"):
                     login_window = AdminWindow("Admin Control Panel", 300, 280)
                     login_window.mainloop()
                     return
@@ -88,28 +90,44 @@ class LoginWindow(cust.CTk):
                     CTkMessagebox(title="Login Failed", message="Invalid user_id or password.", icon="warning")
                     return
             else:
-                #Get user_id, and password from the entries if not admin
+                # Get user_id, and password from the entries if not admin
                 user_id = self.user_id_entry.get()
                 password = self.password_entry.get()
                 if login_type == "Patient":
                     cursor.execute("SELECT check_patient_login(%s, %s)", (int(user_id), password))
+                    # Fetch assigned doctors for the patient
+                    cursor.execute("""
+                        SELECT d.doc_id, s.name 
+                        FROM assignment ad 
+                        JOIN doctors d ON ad.doc_id = d.doc_id 
+                        JOIN staff s ON d.s_id = s.s_id 
+                        WHERE ad.patient_id = %s
+                    """, (int(user_id),))
+                    assigned_doctors = cursor.fetchall()
+                    if assigned_doctors:
+                        message = "You are logged in as a patient.\n\nAssigned Doctors:\n"
+                        for doctor in assigned_doctors:
+                            message += f"Doctor ID: {doctor[0]}, Name: {doctor[1]}\n"
+                    else:
+                        message = "You are logged in as a patient.\n\nNo doctors assigned."
                 elif login_type == "Doctor":
                     cursor.execute("SELECT check_doctor_login(%s, %s)", (int(user_id), password))
+                    # Fetch assigned patients for the doctor
+                    cursor.execute("""
+                        SELECT p.patient_id, p.name 
+                        FROM assignment ad 
+                        JOIN patients p ON ad.patient_id = p.patient_id 
+                        WHERE ad.doc_id = %s
+                    """, (int(user_id),))
+                    assigned_patients = cursor.fetchall()
+                    if assigned_patients:
+                        message = "You are logged in as a doctor.\n\nAssigned Patients:\n"
+                        for patient in assigned_patients:
+                            message += f"Patient ID: {patient[0]}, Name: {patient[1]}\n"
+                    else:
+                        message = "You are logged in as a doctor.\n\nNo patients assigned."
 
-
-
-            # Fetch the result
-            result = cursor.fetchone()
-            is_valid = result[0] if result else False
-
-            # Determine the user type and display appropriate message
-            if is_valid:
-                if login_type == "Patient":
-                    CTkMessagebox(title="Login Successful", message="You are logged in as a patient.", icon="info")
-                elif login_type == "Doctor":
-                    CTkMessagebox(title="Login Successful", message="You are logged in as a doctor.", icon="info")
-            else:
-                CTkMessagebox(title="Login Failed", message="Invalid user_id or password.", icon="warning")
+                CTkMessagebox(title="Login Successful", message=message.strip(), icon="info")
 
         except Exception as e:
             CTkMessagebox(title="Error", message=f"An error occurred: {e}", icon="cancel")

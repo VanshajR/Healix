@@ -42,6 +42,12 @@ CREATE TABLE Staff_Phone_Numbers (
     Phone_Number VARCHAR(10) NOT NULL CHECK (LENGTH(Phone_Number) = 10)
 );
 
+CREATE TABLE assignment (
+    patient_id INTEGER,
+    doc_id INTEGER,
+    CONSTRAINT fk_patient FOREIGN KEY (patient_id) REFERENCES Patients (Patient_ID),
+    CONSTRAINT fk_doctor FOREIGN KEY (doc_id) REFERENCES Doctors (Doc_ID)
+);
 
 CREATE OR REPLACE FUNCTION register_patient(
     p_name VARCHAR,
@@ -393,7 +399,7 @@ BEGIN
     RAISE EXCEPTION 'Staff with ID % not found.', s_staff_id;
   END IF;
 END;
-$$ LANGUAGE 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION check_patient_login(
@@ -428,5 +434,12 @@ BEGIN
     WHERE Doc_ID = doctor_id_in AND pass = password_in;
     
     RETURN is_valid;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE assign_doctor_to_patient(p_patient_id INTEGER, p_doc_id INTEGER) AS $$
+BEGIN
+    INSERT INTO assignment (patient_id, doc_id) VALUES (p_patient_id, p_doc_id);
+    COMMIT;
 END;
 $$ LANGUAGE plpgsql;

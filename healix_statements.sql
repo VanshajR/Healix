@@ -441,3 +441,29 @@ BEGIN
     COMMIT;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION upper_trigger_staff()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.name := UPPER(NEW.name);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER upper_trigger_staff
+BEFORE INSERT OR UPDATE OF name ON Staff
+FOR EACH ROW
+EXECUTE FUNCTION upper_trigger_staff();
+
+CREATE OR REPLACE FUNCTION upper_trigger_patient()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.name := UPPER(NEW.name);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER upper_trigger_patient
+BEFORE INSERT OR UPDATE OF name ON Patient
+FOR EACH ROW
+EXECUTE FUNCTION upper_trigger_patient();

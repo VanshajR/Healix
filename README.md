@@ -1,0 +1,1 @@
+This is a simple Python GUI/middleware and PostgreSQL backend system to manage records of hospital patients and staff. Uses a .env file which must contain the PostgreSQL server URI and an admin account ID and Password.

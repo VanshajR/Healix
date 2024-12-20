@@ -1,0 +1,6 @@
+customtkinter
+psycopg2
+urllib
+tkcalendar
+CTkMessagebox
+tkinter

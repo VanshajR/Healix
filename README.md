@@ -61,20 +61,21 @@ python main.py
 ```
 This program executes the GUI for the login window.
 
-## Project Structure:
-Healix/
-├── admin.py                    # Admin functionalities
-├── assigndoctor.py             # Assign doctors to patients
-├── deletedata.py               # Remove records from the database
-├── docandstaffregistration.py  # Doctor and staff registration
-├── guiobjects.py               # GUI components and utilities
-├── healix_statements.sql       # Database setup SQL script
-├── main.py                     # Entry point for the application
-├── patientregistration.py      # Patient registration logic
-├── plsql statements            # Additional PL/pgSQL scripts
-├── updatedetails.py            # Update existing records
-├── viewassignments.py          # View doctor-patient assignments
-└── viewdetails.py              # View patient and staff details
+## Project Structure:  
+
+Healix/    
+├── admin.py                    # Admin functionalities   
+├── assigndoctor.py             # Assign doctors to patients    
+├── deletedata.py               # Remove records from the database    
+├── docandstaffregistration.py  # Doctor and staff registration    
+├── guiobjects.py               # GUI components and utilities    
+├── healix_statements.sql       # Database setup SQL script    
+├── main.py                     # Entry point for the application    
+├── patientregistration.py      # Patient registration logic    
+├── plsql statements            # Additional PL/pgSQL scripts    
+├── updatedetails.py            # Update existing records    
+├── viewassignments.py          # View doctor-patient assignments    
+└── viewdetails.py              # View patient and staff details    
 
 ## License
 This project is licensed under the BSD 3-Clause License. See the LICENSE file for details.

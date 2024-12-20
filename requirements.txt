@@ -4,3 +4,4 @@ urllib
 tkcalendar
 CTkMessagebox
 tkinter
+dotenv

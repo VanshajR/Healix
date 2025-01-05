@@ -63,6 +63,7 @@ This program executes the GUI for the login window.
 
 ## Project Structure:  
 
+```bash
 Healix/    
 ├── admin.py                    # Admin functionalities   
 ├── assigndoctor.py             # Assign doctors to patients    
@@ -76,6 +77,7 @@ Healix/
 ├── updatedetails.py            # Update existing records    
 ├── viewassignments.py          # View doctor-patient assignments    
 └── viewdetails.py              # View patient and staff details    
+```
 
 ## License
 This project is licensed under the BSD 3-Clause License. See the LICENSE file for details.

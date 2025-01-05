@@ -1,6 +1,6 @@
 # Healix
 
-Healix is a python based hospital management project, which leverages customtkinter GUI and PostgreSQL and plpgSQL functions and procedures to provide CRUD operations.
+Healix is a python based hospital management project, which leverages customtkinter GUI and PostgreSQL and plpgSQL functions and procedures to provide CRUD operations. An Object Oriented approach has been followed throughout the python code for the GUI. 
 
 ## Features
 - Manage records of patients, doctors and other staff
@@ -8,7 +8,7 @@ Healix is a python based hospital management project, which leverages customtkin
 - Interactive UI to manipulate records
 - Robust PostgreSQL architecture that ensures data integrity
 - Data filtering built into the code to ensure correctness
-- GUI based actions for ease of use
+- GUI based actions for ease of use, implemented via Object Oriented Programming principles for organised and smooth functioning 
 
 ## Prerequisites
 

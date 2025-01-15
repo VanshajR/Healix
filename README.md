@@ -24,7 +24,7 @@ Before setting up Healix, ensure you have the following installed:
 1. **Clone the Repository:**:
 
  ```bash
- git clone https://github.com/VanshajR/Healix
+ git clone https://github.com/VanshajR/Healix.git
  cd Healix
 ```
 

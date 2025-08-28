@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15
+    container_name: healix_db
+    environment:
+      POSTGRES_DB: healix_db
+      POSTGRES_USER: healix_user
+      POSTGRES_PASSWORD: healix_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./healix_statements.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U healix_user -d healix_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Healix Application
+  app:
+    build: .
+    container_name: healix_app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - DATABASE_URL=postgresql://healix_user:healix_password@db:5432/healix_db
+      - ADMIN_ID=admin
+      - ADMIN_PASSWORD=admin123
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - .:/app
+    network_mode: host
+    command: python admin.py
+
+  # Alternative: Main application
+  main:
+    build: .
+    container_name: healix_main
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - DATABASE_URL=postgresql://healix_user:healix_password@db:5432/healix_db
+      - ADMIN_ID=admin
+      - ADMIN_PASSWORD=admin123
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - .:/app
+    network_mode: host
+    command: python main.py
+    profiles:
+      - main
+
+  # Web Interface
+  web:
+    build: .
+    container_name: healix_web
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://healix_user:healix_password@db:5432/healix_db
+      - ADMIN_ID=admin
+      - ADMIN_PASSWORD=admin123
+      - SECRET_KEY=healix-secret-key-change-in-production
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    command: python web_app.py
+    profiles:
+      - web
+
+volumes:
+  postgres_data:

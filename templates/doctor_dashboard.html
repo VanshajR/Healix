@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block container_class %}dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Doctor Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="btn" style="width: auto;">Logout</a>
+</div>
+
+<div class="card">
+    <h3>Welcome, Doctor ID: {{ user_id }}</h3>
+    <p>Manage your patients and medical practice</p>
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h3>👥 Patient Management</h3>
+        <p>View and manage your assigned patients</p>
+    </div>
+    
+    <div class="card">
+        <h3>📅 Appointments</h3>
+        <p>Schedule and manage patient appointments</p>
+    </div>
+    
+    <div class="card">
+        <h3>📝 Medical Records</h3>
+        <p>Update patient medical records</p>
+    </div>
+    
+    <div class="card">
+        <h3>💊 Prescriptions</h3>
+        <p>Manage patient prescriptions</p>
+    </div>
+    
+    <div class="card">
+        <h3>📊 Reports</h3>
+        <p>Generate medical reports and summaries</p>
+    </div>
+    
+    <div class="card">
+        <h3>⚕️ Consultations</h3>
+        <p>Schedule and conduct patient consultations</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    <h1>🏥 Healix</h1>
+    <p>Hospital Management System</p>
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h3>For Patients & Doctors</h3>
+        <p>Access your medical records and appointments</p>
+        <a href="{{ url_for('login') }}" class="btn" style="display: inline-block; text-decoration: none; margin-top: 1rem;">Login</a>
+    </div>
+    
+    <div class="card">
+        <h3>For Administrators</h3>
+        <p>Manage hospital records and staff</p>
+        <a href="{{ url_for('login') }}" class="btn" style="display: inline-block; text-decoration: none; margin-top: 1rem;">Admin Login</a>
+    </div>
+</div>
+
+<div class="nav">
+    <p>Welcome to Healix Hospital Management System</p>
+</div>
+{% endblock %}

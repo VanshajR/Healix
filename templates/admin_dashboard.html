@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block container_class %}dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="btn" style="width: auto;">Logout</a>
+</div>
+
+<div class="card">
+    <h3>Welcome, Administrator</h3>
+    <p>Manage all hospital operations and records</p>
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h3>👥 Patient Registration</h3>
+        <p>Register new patients and manage patient records</p>
+    </div>
+    
+    <div class="card">
+        <h3>👨‍⚕️ Staff Management</h3>
+        <p>Register doctors and staff members</p>
+    </div>
+    
+    <div class="card">
+        <h3>📋 View Records</h3>
+        <p>View patient, doctor, and staff records</p>
+    </div>
+    
+    <div class="card">
+        <h3>✏️ Update Records</h3>
+        <p>Update existing patient and staff information</p>
+    </div>
+    
+    <div class="card">
+        <h3>🗑️ Delete Records</h3>
+        <p>Remove records from the database</p>
+    </div>
+    
+    <div class="card">
+        <h3>🔗 Assign Doctors</h3>
+        <p>Assign doctors to patients</p>
+    </div>
+    
+    <div class="card">
+        <h3>👁️ View Assignments</h3>
+        <p>View doctor-patient assignments</p>
+    </div>
+    
+    <div class="card">
+        <h3>📊 Reports</h3>
+        <p>Generate hospital reports and analytics</p>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem; background: #fff3cd; border-left-color: #ffc107;">
+    <h3>🖥️ Desktop Application</h3>
+    <p>For full functionality, use the desktop application:</p>
+    <div style="margin-top: 1rem;">
+        <code>python admin.py</code> - Admin interface<br>
+        <code>python main.py</code> - Login interface
+    </div>
+</div>
+{% endblock %}

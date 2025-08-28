@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block container_class %}dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>Patient Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="btn" style="width: auto;">Logout</a>
+</div>
+
+<div class="card">
+    <h3>Welcome, Patient ID: {{ user_id }}</h3>
+    <p>Access your medical information and appointments</p>
+</div>
+
+{% if assigned_doctors %}
+<div class="card">
+    <h3>Your Assigned Doctors</h3>
+    <div style="margin-top: 1rem;">
+        {% for doctor in assigned_doctors %}
+        <div style="padding: 0.5rem; background: white; margin: 0.5rem 0; border-radius: 5px; border-left: 3px solid #667eea;">
+            <strong>Dr. {{ doctor[1] }}</strong> (ID: {{ doctor[0] }})
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <h3>Assigned Doctors</h3>
+    <p>No doctors currently assigned to you.</p>
+</div>
+{% endif %}
+
+<div class="cards">
+    <div class="card">
+        <h3>📋 Medical Records</h3>
+        <p>View your medical history and records</p>
+    </div>
+    
+    <div class="card">
+        <h3>📅 Appointments</h3>
+        <p>Schedule and manage your appointments</p>
+    </div>
+    
+    <div class="card">
+        <h3>💊 Prescriptions</h3>
+        <p>View your current prescriptions</p>
+    </div>
+    
+    <div class="card">
+        <h3>📞 Contact</h3>
+        <p>Contact your healthcare providers</p>
+    </div>
+</div>
+{% endblock %}

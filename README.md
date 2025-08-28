@@ -61,6 +61,28 @@ python main.py
 ```
 This program executes the GUI for the login window.
 
+## 🚀 Quick Deployment
+
+For easy deployment using Docker:
+
+```bash
+# Run the deployment script
+./deploy.sh
+```
+
+Or manually with Docker Compose:
+
+```bash
+# Setup environment
+cp .env.template .env
+
+# Deploy with Docker
+docker-compose up -d db
+docker-compose up app
+```
+
+For detailed deployment options including cloud deployment, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## Project Structure:  
 
 ```bash
